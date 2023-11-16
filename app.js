@@ -1,47 +1,56 @@
-//התוכנית אחראית על הכנסת נתונים לדאטה בייס, 
-//יש לחלק את התוכנית לפונקציות ולייצא אותם כדי להפעילם בתכנית הראשית, 
-const mongoose = require("mongoose");
-const user = require("./db/users")
-const massag = require("./db/massagea")
+const express = require('express');
+const bodyParser = require('body-parser');
+const { MongoClient } = require('mongodb');
 
+const app = express();
+const port = 3000;
 
-// הגדרות חיבור ל-MongoDB
-const MONGO_URI = "mongodb+srv://com:uEZv14yj2Tsd9p6O@cluster0.gyccyk6.mongodb.net/"
+//הפיכה לגייסון
 
-// התחבר ל-MongoDB
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+app.use(bodyParser.json());
+
+//קבלת האוייבקט מהצד לקוח
+
+app.post('/sendMessage', async (req, res) => {
+    try {
+        // שמירת ההודעה במסד הנתונים
+        const saveResult = await saveMessageToDatabase(req.body);
+
+        if (saveResult) {
+            // תגובה במקרה של שמירה מוצלחת
+            res.json({ success: true, message: 'ההודעה נשמרה בהצלחה במסד הנתונים!' });
+        } else {
+            // תגובה במקרה של שגיאה בשמירה
+            res.status(500).json({ success: false, message: 'ארעה שגיאה בשמירת ההודעה במסד הנתונים.' });
+        }
+        //שגיאה בקבלת הנתונים מהלקוח
+    } catch (error) {
+        console.error("Error handling sendMessage request:", error);
+        res.status(500).json({ success: false, message: 'ארעה שגיאה בטיפול בבקשה.' });
+    }
 });
+//הפונקציה שמכניסה את האובייקט למונגו
+async function saveMessageToDatabase(messageObject) {
+    const uri = "mongodb+srv://com:uEZv14yj2Tsd9p6O@cluster0.gyccyk6.mongodb.net/";
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const db = mongoose.connection;
+    try {
+        await client.connect();
 
-db.on("open", () => {
-  console.log("mongodb connected");
+        const database = client.db("Communication");
+        const collection = database.collection("messages");
+
+        const result = await collection.insertOne(messageObject);
+
+        return result.insertedId ? true : false;
+    } catch (error) {
+        console.error("Error saving message to the database:", error);
+        return false;
+    } finally {
+        await client.close();
+    }
+}
+
+app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
 });
-
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('Connected to the database');
-
-  // יצירת אובייקט משתמש
-  const newUser = new user({
-    name: 'John Doe',
-    email: 'john@example.com',
-    password: 'securePassword123'
-  });
-
-  // שמירת המשתמש במסד הנתונים
-  
-// אחרי (בצורת Promise)
-newUser.save()
-  .then(savedUser => {
-    console.log('User saved successfully:', savedUser);
-  })
-  .catch(err => {
-    console.error('Error saving user:', err);
-  });
-    
-    // סגירת חיבור למסד נתונים לאחר סיום הפעולה
-    db.close();
-  });
