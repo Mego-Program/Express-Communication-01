@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import model from "./modul";
+import model from "./modul.js";
 
 
 
-module.exports = async function getMessagesBetweenUsers(senderID, recipientID) {
+ async function getMessagesBetweenUsers(senderID, recipientID) {
   const uri = "mongodb+srv://com:uEZv14yj2Tsd9p6O@cluster0.gyccyk6.mongodb.net/";
   mongoose.connect(uri,
     {
@@ -35,3 +35,4 @@ module.exports = async function getMessagesBetweenUsers(senderID, recipientID) {
     throw error;
   }
 }
+export default getMessagesBetweenUsers

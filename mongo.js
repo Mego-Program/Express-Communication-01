@@ -4,10 +4,9 @@ import path from "path";
 import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import  {createNewMessage} from './db/createMessage.js'
+import findMessage from "./db/findMessage.js"
 
-
-const createNewMessage = require("./db/createMessage")
-const findMessage = require("./db/findMessage");
 
 
 const app = express();

@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import model from "./modul"
+import model from "./modul.js"
 
 
 //פונקציה לקבלת ההודעה מהמשתמש ושמירתה בדאטה בייס
 
-module.exports = //פונקציה לקבלת ההודעה מהמשתמש ושמירתה בדאטה בייס
+ //פונקציה לקבלת ההודעה מהמשתמש ושמירתה בדאטה בייס
 
-    async function createNewMessage({ senderID, recipientID, content, sendDate }) {
+ export   async function createNewMessage({ senderID, recipientID, content, sendDate }) {
         // יצירת אובייקט חדש על פי הסכמה
         const newMessage = new model({
             senderID: senderID,
@@ -41,3 +41,4 @@ module.exports = //פונקציה לקבלת ההודעה מהמשתמש ושמ�
             return "כישלון";
         }
     }
+
