@@ -5,7 +5,7 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import  {createNewMessage} from './db/createMessage.js'
-import findMessage from "./db/findMessage.js"
+import getMessagesBetweenUsers from "./db/findMessage.js"
 
 
 
@@ -24,8 +24,9 @@ app.post('/sendMasseg', async (req, res) => {
 })
 
 app.get('/findMessages', async (req, res) => {
-  const idusers = req.body;
-  const messagesUser = await findMessage(idusers.senderID, idusers.recipientID)
+  const me = req.query.me;
+  const selected = req.query.selected;
+  const messagesUser = await getMessagesBetweenUsers(me, selected)
   res.status(200).send(messagesUser)
 })
 
@@ -54,6 +55,7 @@ io.on("connection", (socket) => {
     let recipiantSctId = usersTable.get(message.to)
 
     socket.to(recipiantSctId).emit("message", message);
+    createNewMessage(message.from,message.to,message.text,message.timestamp)
   });
 
   socket.on("disconnect", () => {
