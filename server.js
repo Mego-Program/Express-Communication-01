@@ -50,12 +50,17 @@ io.on("connection", (socket) => {
   });
 
   socket.on("privetMessage", (message) => {
+    createNewMessage(message.from,message.to,message.text,message.timestamp)
 
-
-    let recipiantSctId = usersTable.get(message.to)
+  try{
+    let recipiantSctId = usersMap.get(message.to)
 
     socket.to(recipiantSctId).emit("message", message);
-    createNewMessage(message.from,message.to,message.text,message.timestamp)
+  }
+  catch (error) {
+      console.error('the recipient is not conected now', error);
+    }
+  
   });
 
   socket.on("disconnect", () => {
