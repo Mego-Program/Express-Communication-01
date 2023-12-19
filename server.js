@@ -6,6 +6,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import  {createNewMessage} from './db/createMessage.js'
 import getMessagesBetweenUsers from "./db/findMessage.js"
+import { log } from "console";
 
 
 
@@ -47,6 +48,7 @@ io.on("connection", (socket) => {
 
   socket.on("userId", (userId) => {
     usersMap.set(userId, socket.id);
+    console.log(usersMap)
   });
 
   socket.on("privetMessage", (message) => {
@@ -63,7 +65,19 @@ io.on("connection", (socket) => {
   
   });
 
+  function getUserIdBySctId(sctId){
+    usersMap.forEach((value, key) => {
+      if (value === sctId) {
+        return key
+   
+      }
+    });
+  }
+
   socket.on("disconnect", () => {
+    const user = getUserIdBySctId(socket)
+    usersMap.delete(user);
+
     console.log(socket.id,"disconnected");
   });
 });
