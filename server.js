@@ -14,8 +14,15 @@ const app = express();
 const PORT = 3000;
 app.use(express.json());
 
-
-
+app.get('/getUsers', async (req,res) => {
+  try {
+    const response = await axios.post("https://infra-jerusalem-1-server.vercel.app/users/allUsers")
+    console.log(response.data);
+    res.status(200).json(response.data)
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 app.post('/sendMasseg', async (req, res) => {
   const messageObjectFromClient = req.body;
