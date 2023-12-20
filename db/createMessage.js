@@ -6,15 +6,17 @@ import model from "./modul.js"
 
  //פונקציה לקבלת ההודעה מהמשתמש ושמירתה בדאטה בייס
 
-  export   async function createNewMessage({message}) {
+ export   async function createNewMessage({message}) {
         // יצירת אובייקט חדש על פי הסכמה
         const newMessage = new model({
             senderID: message.from,
             recipientID: message.to,
             content: message.text,
-            sendDate: message.timestamp
+            sendDate: message.timestamp,
+            typeDate: message.typeDate
+            
         });
-   const uri = process.env.MONGO_URL ;
+        const uri = process.env.MONGO_URL;
         mongoose.connect(uri,
             {
                 useNewUrlParser: true,
