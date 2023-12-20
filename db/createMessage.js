@@ -12,7 +12,7 @@ import model from "./modul.js"
             senderID: message.from,
             recipientID: message.to,
             content: message.text,
-            sendDate: message.timestamp
+            sendDate: Date(message.timestamp)
         });
    const uri = process.env.MONGO_URL ;
         mongoose.connect(uri,
