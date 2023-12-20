@@ -25,8 +25,8 @@ import model from "./modul.js";
         { senderID: senderID, recipientID: recipientID },
         { senderID: recipientID, recipientID: senderID }
       ]
-    }).sort({ sendDate: 'desc' });
-    const filteredMessages = messages.map(({ senderID, recipientID, content, sendDate }) => ({ senderID, recipientID, content, sendDate }));
+    }).sort({ typeDate: 'desc' });
+    const filteredMessages = messages.map(({ senderID, recipientID, content, sendDate, typeDate }) => ({ senderID, recipientID, content, sendDate, typeDate }));
 
     return filteredMessages;
 
