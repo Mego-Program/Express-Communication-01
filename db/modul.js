@@ -6,6 +6,8 @@ const messageSchema = new mongoose.Schema({
     recipientID: { type: String, required: true },
     content: { type: String, required: true },
     sendDate: { type: String, required: true }
+    typeDate: {type: Date, required: true}
+
   });
 
 
