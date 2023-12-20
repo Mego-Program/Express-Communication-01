@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import express from "express";
 import path from "path";
 import http from "http";
+import dotenv from 'dotenv';
 import { Server } from "socket.io";
 import cors from "cors";
 import  {createNewMessage} from './db/createMessage.js'
@@ -9,7 +10,7 @@ import getMessagesBetweenUsers from "./db/findMessage.js"
 import { log } from "console";
 
 
-
+dotenv.config();
 const app = express();
 const PORT = 3000;
 app.use(express.json());
@@ -59,7 +60,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("privetMessage", (message) => {
-    createNewMessage(message.from,message.to,message.text,message.timestamp)
+    createNewMessage({message})
 
   try{
     let recipiantSctId = usersMap.get(message.to)
