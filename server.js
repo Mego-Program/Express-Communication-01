@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("privetMessage", (message) => {
-    createNewMessage(message.from,message.to,message.text,message.timestamp)
+    createNewMessage({message})
 
   try{
     let recipiantSctId = usersMap.get(message.to)
