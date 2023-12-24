@@ -18,7 +18,7 @@ app.use(express.json());
 app.get("/getUsers", async (req, res) => {
   try {
     const response = await axios.post(
-      "https://infra-jerusalem-1-server.vercel.app/users/allUsers/"
+      "https://infra-jerusalem-1-server-five.vercel.app/users/allusers"
     );
     console.log(response.data);
     res.status(200).json(response.data);
