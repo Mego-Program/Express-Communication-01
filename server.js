@@ -8,24 +8,26 @@ import cors from "cors";
 import { createNewMessage } from "./db/createMessage.js";
 import getMessagesBetweenUsers from "./db/findMessage.js";
 import { log } from "console";
-import axios from "axios"
+import axios from "axios";
 
 dotenv.config();
 const app = express();
 const PORT = 3000;
 app.use(express.json());
 
-app.get('/getUsers', async (req,res) => {
+app.get("/getUsers", async (req, res) => {
   try {
-    const response = await axios.post("https://infra-jerusalem-1-server-five.vercel.app/users/allusers")
+    const response = await axios.post(
+      "https://infra-jerusalem-1-server-five.vercel.app/users/allusers"
+    );
     console.log(response.data);
-    res.status(200).json(response.data)
+    res.status(200).json(response.data);
   } catch (error) {
     console.log(error);
   }
-})
+});
 
-app.post('/sendMasseg', async (req, res) => {
+app.post("/sendMasseg", async (req, res) => {
   const messageObjectFromClient = req.body;
   const chek = await createNewMessage(messageObjectFromClient);
   console.log(chek);
@@ -43,7 +45,7 @@ const server = http.createServer(app);
 app.use(cors());
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:4174","http://localhost:4181"],
+    origin: ["http://localhost:4174", "http://localhost:4181"],
     methods: ["GET", "POST"],
   },
 });
