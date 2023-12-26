@@ -60,6 +60,11 @@ io.on("connection", (socket) => {
     console.log(usersMap);
   });
 
+  socket.on('activity', (name) => {
+    console.log(`${name} is typing...`);
+    socket.to(usersMap.get(name)).emit('activity',getUserIdBySctId(socket));
+  });
+
   socket.on("privetMessage", (message) => {
     createNewMessage({ message });
 
