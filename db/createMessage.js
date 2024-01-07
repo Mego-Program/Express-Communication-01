@@ -16,7 +16,8 @@ import model from "./modul.js"
             typeDate: message.typeDate
             
         });
-        const uri = process.env.MONGO_URL;
+        const uri = "mongodb+srv://com:uEZv14yj2Tsd9p6O@cluster0.gyccyk6.mongodb.net/";
+
         mongoose.connect(uri,
             {
                 useNewUrlParser: true,
