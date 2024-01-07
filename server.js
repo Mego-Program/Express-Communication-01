@@ -45,7 +45,8 @@ const server = http.createServer(app);
 app.use(cors());
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:4174", "http://localhost:4181"],
+    origin: ["http://localhost:4174", "http://localhost:4181","https://communication-jerusalem-1-two.vercel.app", "https://communication-jerusalem-1-two.vercel.app/assets/remoteEntry.js"
+  ],
     methods: ["GET", "POST"],
   },
 });
