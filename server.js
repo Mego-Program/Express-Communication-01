@@ -20,7 +20,6 @@ app.get("/getUsers", async (req, res) => {
     const response = await axios.post(
       "https://infra-jerusalem-1-server-five.vercel.app/users/allusers"
     );
-    console.log(response.data);
     res.status(200).json(response.data);
   } catch (error) {
     console.log(error);
@@ -61,8 +60,9 @@ io.on("connection", (socket) => {
     console.log(usersMap);
   });
 
-  socket.on("privetMessage", (message) => {
+  socket.on("message", (message) => {
     createNewMessage({ message });
+
 
     try {
       let recipiantSctId = usersMap.get(message.to);

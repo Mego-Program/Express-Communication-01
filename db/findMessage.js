@@ -5,11 +5,7 @@ import model from "./modul.js";
 
  async function getMessagesBetweenUsers(senderID, recipientID) {
   const uri = "mongodb+srv://com:uEZv14yj2Tsd9p6O@cluster0.gyccyk6.mongodb.net/";
-  mongoose.connect(uri,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
+  mongoose.connect(uri
   )
   const db = mongoose.connection;
 
