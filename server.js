@@ -57,13 +57,10 @@ io.on("connection", (socket) => {
 
   socket.on("userId", (userId) => {
     usersMap.set(userId, socket.id);
-    console.log(usersMap);
   });
 
   socket.on("message", (message) => {
     createNewMessage({ message });
-
-
     try {
       let recipiantSctId = usersMap.get(message.to);
 

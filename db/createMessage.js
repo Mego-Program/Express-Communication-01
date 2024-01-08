@@ -34,7 +34,7 @@ import model from "./modul.js"
         try {
             // שמירת האובייקט במסד הנתונים
             const savedMessage = await newMessage.save();
-            console.log('הודעה נוצרה בהצלחה:', savedMessage);
+            
             const response = savedMessage ? "הצלחה" : "כישלון";
             return response;
 
